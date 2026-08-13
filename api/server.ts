@@ -1,28 +1,15 @@
 import 'dotenv/config';
-import app from './app';
-import { connectDB, pool } from './config/db';
+import app from '../app';
+import { connectDB } from '../config/db';
 
-const PORT = process.env.PORT || 3000;
+let connected = false;
 
-const main = async () => {
-  await connectDB();
+export default async function handler(req: any, res: any) {
+  if (!connected) {
+    await connectDB();
+    connected = true;
+  }
 
-  app.get('/', (_req, res) => {
-    res.json({ message: 'Welcome to the CareerMap API' });
-  });
+  return app(req, res);
+}
 
-  app.get('/health', async (_req, res) => {
-    try {
-      await pool.query('SELECT 1');
-      res.json({ status: 'healthy', database: 'connected' });
-    } catch {
-      res.status(503).json({ status: 'unhealthy', database: 'error' });
-    }
-  });
-
-  app.listen(PORT, () => {
-    console.log(`API running on http://localhost:${PORT}`);
-  });
-};
-
-main();

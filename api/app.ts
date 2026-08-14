@@ -7,6 +7,7 @@ import savedMentorRoutes from './routes/saved-mentor.route';
 import savedCareerRoutes from './routes/saved-career.route';
 import quizRoutes from './routes/quiz.routes';
 import conversationRoutes from './routes/conversation.route';
+import { pool } from './config/db'
 
 import swaggerRouter from './swagger'; // <-- import
 import cors from 'cors';

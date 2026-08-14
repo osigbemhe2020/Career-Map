@@ -38,6 +38,19 @@ app.use('/conversations', conversationRoutes);
 // });
 app.use('/api-docs', swaggerRouter);
 
+app.get('/', (_req, res) => {
+  res.json({ message: 'Welcome to the CareerMap API' });
+});
+
+app.get('/health', async (_req, res) => {
+    try {
+      await pool.query('SELECT 1');
+      res.json({ status: 'healthy', database: 'connected' });
+    } catch {
+      res.status(503).json({ status: 'unhealthy', database: 'error' });
+    }
+  });
+
 // Error handler
 const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
   console.error('Unhandled error:', err);

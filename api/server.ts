@@ -1,6 +1,6 @@
 import 'dotenv/config';
-import app from '../app';
-import { connectDB } from '../config/db';
+import app from './app';               // ✅ current directory
+import { connectDB } from './config/db';  // ✅ assuming config/db.ts exists
 
 let connected = false;
 
